@@ -19,14 +19,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lms',   # aplikasi utama kamu
-    'silk',
 ]
+
+if DEBUG:
+    INSTALLED_APPS += ['silk']
 
 # ✅ MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'silk.middleware.SilkyMiddleware',  # ✅ letakkan setelah SessionMiddleware
+    'django.contrib.sessions.middleware.SessionMiddleware', # ✅ letakkan setelah SessionMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -34,6 +35,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+if DEBUG:
+    MIDDLEWARE += ['silk.middleware.SilkyMiddleware']
+    
 # URL & WSGI
 ROOT_URLCONF = 'simple_lms.urls'
 WSGI_APPLICATION = 'simple_lms.wsgi.application'
