@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tambah Mata Kuliah</title>
+</head>
+<body>
+    <h1>Tambah Mata Kuliah</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label>Kode MK:</label><br>
+        <input type="text" name="kode_mk"><br><br>
+
+        <label>Nama MK:</label><br>
+        <input type="text" name="nama_mk"><br><br>
+
+        <label>SKS:</label><br>
+        <input type="number" name="sks"><br><br>
+
+        <button type="submit">Simpan</button>
+    </form>
+
+    <a href="{% url 'daftar_matakuliah' %}">Kembali</a>
+</body>
+</html>

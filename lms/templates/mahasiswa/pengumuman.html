@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengumuman</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#f5f6ff] font-sans">
+  <div class="max-w-3xl mx-auto mt-8 p-6 bg-white rounded-2xl shadow-md">
+    <h1 class="text-2xl font-bold text-[#16476A] mb-4 text-center">📢 Pengumuman Kampus</h1>
+
+    {% for p in pengumuman %}
+      <div class="border-l-4 border-[#16476A] bg-[#f9fafc] rounded-lg p-4 mb-4 shadow-sm">
+        <h2 class="text-lg font-semibold text-[#1e2a78]">{{ p.judul }}</h2>
+        <p class="text-gray-600 text-sm mb-2">🗓 {{ p.tanggal }} | ✍️ {{ p.penulis }}</p>
+        <p class="text-gray-700 leading-relaxed">{{ p.isi }}</p>
+      </div>
+    {% empty %}
+      <p class="text-center text-gray-500 italic">Belum ada pengumuman saat ini.</p>
+    {% endfor %}
+
+    <div class="mt-6 text-center">
+      <a href="{% url 'dashboard_mahasiswa' mahasiswa.nim %}" 
+         class="bg-[#16476A] text-white px-5 py-2 rounded-lg hover:bg-[#123a58] transition">
+         ← Kembali ke Dashboard
+      </a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Mahasiswa | Simple LMS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-100 to-blue-100 flex items-center justify-center h-screen font-sans">
+  <div class="bg-white shadow-lg rounded-xl p-8 w-[90%] max-w-md">
+    <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">Login Mahasiswa</h2>
+
+    {% if messages %}
+      <div class="mb-4">
+        {% for message in messages %}
+          <p class="text-red-600 text-center font-medium">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-2">NIM</label>
+        <input type="text" name="nim" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring focus:ring-blue-200" placeholder="Masukkan NIM Anda" required>
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-gray-700 font-medium mb-2">Nama</label>
+        <input type="text" name="nama" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring focus:ring-blue-200" placeholder="Masukkan Nama Anda" required>
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold">
+        Masuk
+      </button>
+    </form>
+
+    <div class="text-center mt-6">
+      <a href="/" class="text-blue-500 hover:underline">← Kembali</a>
+    </div>
+  </div>
+</body>
+</html>

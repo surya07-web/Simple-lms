@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Nilai Mahasiswa{% endblock %}
+{% block content %}
+<div class="min-h-screen bg-[#f5f6ff] py-10 px-6 flex flex-col items-center">
+  <div class="bg-white shadow-lg rounded-3xl w-full max-w-3xl p-8">
+    <h2 class="text-2xl font-bold text-[#1e2a78] mb-4">Daftar Nilai</h2>
+
+    {% if nilai_list %}
+      <table class="w-full border border-gray-200 rounded-lg overflow-hidden">
+        <thead class="bg-[#16476A] text-white">
+          <tr>
+            <th class="py-2 px-4 text-left">Mata Kuliah</th>
+            <th class="py-2 px-4 text-left">SKS</th>
+            <th class="py-2 px-4 text-left">Nilai</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for nilai in nilai_list %}
+          <tr class="border-b hover:bg-gray-50">
+            <!-- ubah baris ini -->
+            <td class="py-2 px-4">{{ nilai.mata_kuliah.nama_mk }}</td>
+            <!-- tambahkan ini agar SKS muncul dari relasi -->
+            <td class="py-2 px-4">{{ nilai.mata_kuliah.sks }}</td>
+            <td class="py-2 px-4 font-semibold">{{ nilai.nilai }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="text-gray-500 mt-4 text-center">Belum ada data nilai.</p>
+    {% endif %}
+
+    <div class="mt-6 text-center">
+      <a href="{% url 'dashboard_mahasiswa' mahasiswa.nim %}" class="bg-[#16476A] text-white px-5 py-2 rounded-lg shadow-md">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Kembali ke Dashboard
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

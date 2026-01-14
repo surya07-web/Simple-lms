@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jadwal Kuliah</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#f5f6ff] font-sans">
+
+  <!-- Header -->
+  <header class="bg-[#16476A] text-white px-6 py-4 rounded-b-3xl shadow-md flex justify-between items-center">
+    <h1 class="text-xl font-bold">Jadwal Kuliah</h1>
+    <a href="{% url 'dashboard_mahasiswa' mahasiswa.nim %}" 
+       class="bg-yellow-400 text-[#16476A] px-3 py-1 rounded-lg font-semibold hover:bg-yellow-500 transition">
+      ← Kembali
+    </a>
+  </header>
+
+  <!-- Konten Jadwal -->
+  <main class="p-6">
+    {% if jadwal_list %}
+      <div class="bg-white rounded-2xl shadow-md p-4">
+
+        <!-- ✅ Tambahkan scroll horizontal biar gak kepotong di HP -->
+        <div class="overflow-x-auto w-full">
+          <table class="min-w-full text-sm text-left border-collapse">
+            <thead>
+              <tr class="bg-[#16476A] text-white text-xs sm:text-sm">
+                <th class="py-2 px-3 whitespace-nowrap">Mata Kuliah</th>
+                <th class="py-2 px-3 whitespace-nowrap">Dosen</th>
+                <th class="py-2 px-3 whitespace-nowrap">Hari</th>
+                <th class="py-2 px-3 whitespace-nowrap">Jam</th>
+                <th class="py-2 px-3 whitespace-nowrap">Ruang</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white text-gray-700 text-xs sm:text-sm">
+              {% for jadwal in jadwal_list %}
+              <tr class="border-b hover:bg-gray-50">
+                <td class="py-2 px-3">{{ jadwal.mata_kuliah.nama_mk }}</td>
+                <td class="py-2 px-3">{{ jadwal.dosen }}</td>
+                <td class="py-2 px-3">{{ jadwal.hari }}</td>
+                <td class="py-2 px-3">{{ jadwal.jam_mulai }} - {{ jadwal.jam_selesai }}</td>
+                <td class="py-2 px-3">{{ jadwal.ruangan }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    {% else %}
+      <p class="text-center text-gray-500 mt-10">Belum ada jadwal yang tersedia.</p>
+    {% endif %}
+  </main>
+
+</body>
+</html>

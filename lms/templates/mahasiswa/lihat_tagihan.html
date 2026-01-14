@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Tagihan Mahasiswa{% endblock %}
+{% block content %}
+<div class="min-h-screen bg-[#f5f6ff] py-10 px-4 flex flex-col items-center">
+  <div class="bg-white shadow-lg rounded-3xl w-full max-w-3xl p-6 sm:p-8">
+
+    <h2 class="text-2xl font-bold text-[#1e2a78] mb-4 text-center">Daftar Tagihan</h2>
+
+    {% if tagihan_list %}
+      <!-- ✅ Tambahkan scroll horizontal -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden text-sm sm:text-base">
+          <thead class="bg-[#16476A] text-white">
+            <tr>
+              <th class="py-2 px-3 text-left whitespace-nowrap">Nama Tagihan</th>
+              <th class="py-2 px-3 text-left whitespace-nowrap">Jumlah</th>
+              <th class="py-2 px-3 text-left whitespace-nowrap">Status</th>
+              <th class="py-2 px-3 text-left whitespace-nowrap">Tanggal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for tagihan in tagihan_list %}
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-2 px-3">{{ tagihan.nama_tagihan }}</td>
+              <td class="py-2 px-3">Rp {{ tagihan.jumlah|floatformat:0 }}</td>
+              <td class="py-2 px-3">
+                {% if tagihan.status == "Lunas" %}
+                  <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs sm:text-sm">Lunas</span>
+                {% else %}
+                  <span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs sm:text-sm">Belum Lunas</span>
+                {% endif %}
+              </td>
+              <td class="py-2 px-3">{{ tagihan.tanggal }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="text-gray-500 mt-4 text-center">Belum ada data tagihan.</p>
+    {% endif %}
+
+    <!-- Tombol Kembali -->
+    <div class="mt-6 text-center">
+      <a href="{% url 'dashboard_mahasiswa' mahasiswa.nim %}" 
+         class="bg-[#16476A] text-white px-5 py-2 rounded-lg shadow-md hover:bg-[#123a58] transition">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Kembali ke Dashboard
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Mahasiswa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="bg-[#f5f6ff] font-sans">
+
+  <!-- Header -->
+  <header class="bg-[#16476A] text-white px-5 py-4 rounded-b-3xl shadow-md relative">
+    <h1 class="text-2xl font-bold">Beranda</h1>
+    <p class="text-sm mt-1 opacity-80">Selamat Datang, {{ mahasiswa.nama }}</p>
+
+    <!-- Tombol Logout -->
+    <a href="{% url 'logout_user' %}"
+       class="absolute top-4 right-5 bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-1.5 rounded-lg font-medium transition">
+      <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+    </a>
+
+    <!-- Profil Mahasiswa -->
+    <div class="bg-white text-[#1e2a78] mt-5 p-3 rounded-2xl flex items-center shadow-md">
+      {% if mahasiswa.foto %}
+        <img src="{{ mahasiswa.foto.url }}" 
+             alt="Foto Mahasiswa"
+             class="w-14 h-14 rounded-full object-cover border-2 border-[#16476A] mr-3">
+      {% else %}
+        <img src="https://ui-avatars.com/api/?name={{ mahasiswa.nama }}&background=16476A&color=fff" 
+             alt="Foto Mahasiswa"
+             class="w-14 h-14 rounded-full mr-3">
+      {% endif %}
+
+      <div class="flex-1">
+        <p class="font-bold text-lg uppercase">{{ mahasiswa.nama }}</p>
+        <p class="text-sm text-gray-600">{{ mahasiswa.nim }}</p>
+      </div>
+
+      <!-- Tombol Panah ke Profil -->
+      <a href="{% url 'lihat_profil' mahasiswa.nim %}" 
+         class="bg-[#facc15] p-2 rounded-full hover:scale-110 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#1e2a78]" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 
+                1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Menu Sistem Informasi -->
+  <section class="mt-6 px-6">
+    <h2 class="font-semibold text-lg text-[#1e2a78] mb-3">Menu Sistem Informasi</h2>
+
+    <div class="grid grid-cols-3 gap-4">
+      {% for item in menu %}
+        {% if item.label == 'Kehadiran' %}
+          <a href="{% url 'lihat_kehadiran' mahasiswa.nim %}" 
+             class="bg-white rounded-2xl flex flex-col items-center justify-center py-5 shadow-sm hover:scale-105 transition">
+            <div class="w-12 h-12 flex items-center justify-center rounded-xl mb-2" style="background-color: {{ item.color }};">
+              <i class="{{ item.icon }} text-white text-xl"></i>
+            </div>
+            <p class="text-[#1e2a78] font-medium text-sm">{{ item.label }}</p>
+          </a>
+
+        {% elif item.label == 'SKS' %}
+          <a href="{% url 'lihat_sks' mahasiswa.nim %}" 
+             class="bg-white rounded-2xl flex flex-col items-center justify-center py-5 shadow-sm hover:scale-105 transition">
+            <div class="w-12 h-12 flex items-center justify-center rounded-xl mb-2" style="background-color: {{ item.color }};">
+              <i class="{{ item.icon }} text-white text-xl"></i>
+            </div>
+            <p class="text-[#1e2a78] font-medium text-sm">{{ item.label }}</p>
+          </a>
+
+        {% elif item.label == 'Nilai' %}
+          <a href="{% url 'lihat_nilai' mahasiswa.nim %}" 
+             class="bg-white rounded-2xl flex flex-col items-center justify-center py-5 shadow-sm hover:scale-105 transition">
+            <div class="w-12 h-12 flex items-center justify-center rounded-xl mb-2" style="background-color: {{ item.color }};">
+              <i class="{{ item.icon }} text-white text-xl"></i>
+            </div>
+            <p class="text-[#1e2a78] font-medium text-sm">{{ item.label }}</p>
+          </a>
+
+        {% elif item.label == 'Pengumuman' %}
+          <a href="{% url 'daftar_pengumuman' mahasiswa.nim %}" 
+             class="bg-white rounded-2xl flex flex-col items-center justify-center py-5 shadow-sm hover:scale-105 transition">
+            <div class="w-12 h-12 flex items-center justify-center rounded-xl mb-2" style="background-color: {{ item.color }};">
+              <i class="{{ item.icon }} text-white text-xl"></i>
+            </div>
+            <p class="text-[#1e2a78] font-medium text-sm">{{ item.label }}</p>
+          </a>
+
+        {% elif item.label == 'Pengaturan' %}
+          <a href="{% url 'pengaturan_mahasiswa' mahasiswa.nim %}" 
+            class="bg-white rounded-2xl flex flex-col items-center justify-center py-5 shadow-sm hover:scale-105 transition">
+            <div class="w-12 h-12 flex items-center justify-center rounded-xl mb-2" style="background-color: {{ item.color }};">
+              <i class="{{ item.icon }} text-white text-xl"></i>
+            </div>
+            <p class="text-[#1e2a78] font-medium text-sm">{{ item.label }}</p>
+          </a>
+
+        {% elif item.label == 'Jadwal' %}
+          <a href="{% url 'lihat_jadwal' mahasiswa.nim %}" 
+            class="bg-white rounded-2xl flex flex-col items-center justify-center py-5 shadow-sm hover:scale-105 transition">
+            <div class="w-12 h-12 flex items-center justify-center rounded-xl mb-2"
+                style="background-color: {{ item.color }};">
+              <i class="{{ item.icon }} text-white text-xl"></i>
+            </div>
+            <p class="text-[#1e2a78] font-medium text-sm">{{ item.label }}</p>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Status Pembayaran -->
+  <!-- Status Pembayaran -->
+<section class="mt-6 px-6 mb-24">
+  <h2 class="font-semibold text-lg text-[#1e2a78] mb-2">Status Pembayaran</h2>
+  <div class="bg-white rounded-2xl p-4 shadow-sm">
+    <p class="text-sm italic">
+      {% if pembayaran.status == 'Belum Lunas' %}
+        <span class="text-red-600 font-semibold">{{ pembayaran.status }}</span>
+      {% else %}
+        <span class="text-green-600 font-semibold">{{ pembayaran.status }}</span>
+      {% endif %}
+    </p>
+
+    <p class="mt-2 text-gray-700">
+      💰 Jumlah: <span class="font-semibold text-[#1e2a78]">Rp {{ pembayaran.jumlah }}</span><br>
+      📅 Tanggal: <span class="font-semibold text-[#1e2a78]">{{ pembayaran.tanggal }}</span><br>
+      🔍 <a href="{% url 'lihat_tagihan' mahasiswa.nim %}" class="text-blue-600 hover:underline">
+        Lihat Riwayat Tagihan
+      </a>
+    </p>
+  </div>
+</section>
+
+
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-3 shadow-md">
+    <a href="#" class="flex flex-col items-center text-[#1e2a78] font-semibold">
+      <i class="fa-solid fa-house mb-1 text-lg"></i>
+      <span class="text-sm">Beranda</span>
+    </a>
+    <a href="{% url 'lihat_tagihan' mahasiswa.nim %}" class="flex flex-col items-center">
+      <i class="fa-solid fa-receipt text-gray-400 text-2xl"></i>
+      <span class="text-gray-400 text-sm mt-1">Tagihan</span>
+    </a>
+
+    <a href="{% url 'lihat_profil' mahasiswa.nim %}" class="flex flex-col items-center text-gray-400 hover:text-[#1e2a78] transition">
+      <i class="fa-solid fa-user mb-1 text-lg"></i>
+      <span class="text-sm">Profil</span>
+    </a>
+  </nav>
+
+</body>
+</html>

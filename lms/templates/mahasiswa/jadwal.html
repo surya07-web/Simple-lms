@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profil Mahasiswa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#f5f6ff] font-sans">
+
+  <div class="max-w-md mx-auto bg-white rounded-2xl mt-10 p-6 shadow-md">
+    <h1 class="text-2xl font-bold text-[#16476A] mb-6 text-center">Edit Profil Mahasiswa</h1>
+
+    <!-- ✅ enctype agar upload foto bisa jalan -->
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <!-- Foto Profil -->
+      <div class="mb-6 text-center">
+        <label for="foto" class="block text-sm font-medium text-gray-700 mb-2">Foto Profil</label>
+        <div class="flex flex-col items-center">
+          {% if mahasiswa.foto %}
+            <img id="preview" src="{{ mahasiswa.foto.url }}" alt="Foto Profil"
+                 class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow mb-3">
+          {% else %}
+            <img id="preview" src="https://ui-avatars.com/api/?name={{ mahasiswa.nama }}&background=16476A&color=fff"
+                 alt="Foto Profil Default"
+                 class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow mb-3">
+          {% endif %}
+          
+          <input type="file" id="foto" name="foto" accept="image/*"
+                 class="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#16476A]">
+        </div>
+      </div>
+
+      <!-- Nama -->
+      <div class="mb-4">
+        <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+        <input type="text" id="nama" name="nama" value="{{ mahasiswa.nama }}" readonly
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed">
+      </div>
+
+      <!-- Program Studi -->
+      <div class="mb-4">
+        <label for="prodi" class="block text-sm font-medium text-gray-700 mb-1">Program Studi</label>
+        <input type="text" id="prodi" name="prodi" value="{{ mahasiswa.prodi }}" readonly
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed">
+      </div>
+
+      <!-- Angkatan -->
+      <div class="mb-4">
+        <label for="angkatan" class="block text-sm font-medium text-gray-700 mb-1">Angkatan</label>
+        <input type="number" id="angkatan" name="angkatan" value="{{ mahasiswa.angkatan }}" readonly
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed">
+      </div>
+
+      <!-- Alamat (editable) -->
+      <div class="mb-6">
+        <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
+        <input type="text" id="alamat" name="alamat" value="{{ mahasiswa.alamat }}"
+               placeholder="Masukkan alamat Anda"
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#16476A]">
+      </div>
+
+      <!-- Tombol Aksi -->
+      <div class="flex flex-col gap-3">
+        <button type="submit" 
+                class="bg-[#16476A] text-white py-2 rounded-lg font-semibold hover:bg-[#123a58] transition">
+          Simpan Perubahan
+        </button>
+
+        <a href="{% url 'pengaturan_mahasiswa' mahasiswa.nim %}" 
+           class="text-center bg-gray-300 text-[#1e2a78] py-2 rounded-lg hover:bg-gray-400 transition">
+          ← Kembali ke Pengaturan
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Preview Gambar -->
+  <script>
+    const inputFoto = document.getElementById('foto');
+    const preview = document.getElementById('preview');
+
+    inputFoto.addEventListener('change', () => {
+      const file = inputFoto.files[0];
+      if (file) {
+        preview.src = URL.createObjectURL(file);
+      }
+    });
+  </script>
+
+</body>
+</html>

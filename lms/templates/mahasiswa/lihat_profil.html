@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Profil Mahasiswa{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-[#f5f6ff] py-10 px-6 flex flex-col items-center">
+
+  <!-- Kartu Profil -->
+  <div class="bg-white shadow-lg rounded-3xl w-full max-w-2xl p-8">
+    <!-- Header Profil -->
+    <div class="flex flex-col items-center mb-6">
+      {% if mahasiswa.foto %}
+        <img src="{{ mahasiswa.foto.url }}" 
+             alt="Foto Profil Mahasiswa"
+             class="w-24 h-24 rounded-full shadow-md mb-3 object-cover border-4 border-[#16476A]">
+      {% else %}
+        <img src="https://ui-avatars.com/api/?name={{ mahasiswa.nama }}&background=16476A&color=fff&size=100"
+             alt="Foto Default"
+             class="w-24 h-24 rounded-full shadow-md mb-3 object-cover border-4 border-[#16476A]">
+      {% endif %}
+      
+      <h2 class="text-2xl font-bold text-[#1e2a78]">Profil Mahasiswa</h2>
+      <p class="text-gray-500 mt-1 text-sm">Data diri mahasiswa aktif</p>
+    </div>
+
+    <hr class="border-gray-200 mb-6">
+
+    <!-- Data Profil -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
+      <div class="font-semibold">Nama Lengkap</div>
+      <div>{{ mahasiswa.nama }}</div>
+
+      <div class="font-semibold">NIM</div>
+      <div>{{ mahasiswa.nim }}</div>
+
+      <div class="font-semibold">Program Studi</div>
+      <div>{{ mahasiswa.prodi }}</div>
+
+      <div class="font-semibold">Angkatan</div>
+      <div>{{ mahasiswa.angkatan }}</div>
+
+      <div class="font-semibold">Email</div>
+      <div>{{ mahasiswa.email|default:"-" }}</div>
+    </div>
+
+    <!-- Tombol Kembali -->
+    <div class="mt-8 text-center">
+      <a href="{% url 'dashboard_mahasiswa' mahasiswa.nim %}"
+         class="inline-flex items-center bg-[#16476A] hover:bg-[#133d5b] text-white px-6 py-2 rounded-lg shadow-md transition">
+        <i class="fa-solid fa-arrow-left mr-2"></i> Kembali ke Dashboard
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

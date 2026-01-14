@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Mahasiswa & Nilai</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Daftar Mahasiswa dan Nilainya</h1>
+
+    {% for item in data %}
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5>{{ item.mahasiswa.nama }} ({{ item.mahasiswa.nim }})</h5>
+                <a href="{% url 'hapus_mahasiswa' item.mahasiswa.id %}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Yakin ingin menghapus {{ item.mahasiswa.nama }}?')">Hapus</a>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for n in item.nilai_list %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ n.matakuliah.nama_mk }}
+                            <span class="badge bg-primary">{{ n.nilai }}</span>
+                        </li>
+                    {% empty %}
+                        <li class="list-group-item"><i>Tidak ada nilai.</i></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>

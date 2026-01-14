@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Daftar Mahasiswa</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #007bff; color: white; }
+    a { text-decoration: none; color: #007bff; }
+    a:hover { text-decoration: underline; }
+    .btn { background: #28a745; color: white; padding: 8px 12px; border-radius: 5px; text-decoration: none; }
+    .btn:hover { background: #218838; }
+  </style>
+</head>
+<body>
+  <h1>Daftar Mahasiswa</h1>
+  <a href="{% url 'tambah_mahasiswa' %}" class="btn">Tambah Mahasiswa</a>
+
+  <table>
+    <tr>
+      <th>No</th>
+      <th>NIM</th>
+      <th>Nama</th>
+      <th>Prodi</th>
+      <th>Angkatan</th>
+      <th>Aksi</th>
+    </tr>
+    {% for item in data %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ item.mahasiswa.nim }}</td>
+        <td>{{ item.mahasiswa.nama }}</td>
+        <td>{{ item.mahasiswa.prodi }}</td>
+        <td>{{ item.mahasiswa.angkatan }}</td>
+        <td>
+          <a href="{% url 'edit_mahasiswa' item.mahasiswa.id %}">Edit</a> |
+          <a href="{% url 'hapus_mahasiswa' item.mahasiswa.id %}" onclick="return confirm('Hapus data ini?')">Hapus</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6">Belum ada data mahasiswa.</td></tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

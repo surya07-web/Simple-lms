@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>Edit Mata Kuliah</title></head>
+<body>
+    <h1>Edit Mata Kuliah</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Kode MK:</label><br>
+        <input type="text" name="kode_mk" value="{{ matakuliah.kode_mk }}"><br><br>
+
+        <label>Nama MK:</label><br>
+        <input type="text" name="nama_mk" value="{{ matakuliah.nama_mk }}"><br><br>
+
+        <label>SKS:</label><br>
+        <input type="number" name="sks" value="{{ matakuliah.sks }}"><br><br>
+
+        <button type="submit">Update</button>
+    </form>
+    <a href="{% url 'daftar_matakuliah' %}">Kembali</a>
+</body>
+</html>

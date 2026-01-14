@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengaturan Mahasiswa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f5f6ff] font-sans min-h-screen flex items-center justify-center">
+
+  <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-10 border border-gray-100">
+    <h1 class="text-3xl font-bold text-[#16476A] mb-6 border-b-2 border-gray-200 pb-3 text-center">
+      Pengaturan Profil Mahasiswa
+    </h1>
+
+    <div class="space-y-4 text-gray-800 text-lg">
+      <p><strong class="text-gray-600">Nama:</strong> 
+         <span class="font-medium">{{ mahasiswa.nama }}</span></p>
+
+      <p><strong class="text-gray-600">NIM:</strong> 
+         <span class="font-medium">{{ mahasiswa.nim }}</span></p>
+
+      <p><strong class="text-gray-600">Program Studi:</strong> 
+         <span class="font-medium">{{ mahasiswa.prodi }}</span></p>
+
+      <p><strong class="text-gray-600">Angkatan:</strong> 
+         <span class="font-medium">{{ mahasiswa.angkatan }}</span></p>
+
+      <!-- 🏠 Tambahan: Alamat Mahasiswa -->
+      <p><strong class="text-gray-600">Alamat:</strong> 
+         <span class="font-medium">
+           {% if mahasiswa.alamat %}
+             {{ mahasiswa.alamat }}
+           {% else %}
+             <em class="text-gray-400">Belum diisi</em>
+           {% endif %}
+         </span>
+      </p>
+    </div>
+
+    <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+      <!-- Tombol Edit Profil -->
+      <a href="{% url 'edit_profil_mahasiswa' mahasiswa.nim %}" 
+         class="w-full sm:w-auto text-center bg-[#16476A] text-white font-semibold py-3 px-6 rounded-xl hover:bg-[#133c59] transition duration-200 shadow-sm">
+        ✏️ Edit Profil
+      </a>
+
+      <!-- Tombol Kembali ke Beranda -->
+      <a href="{% url 'dashboard_mahasiswa' mahasiswa.nim %}" 
+         class="w-full sm:w-auto text-center bg-gray-200 text-[#16476A] font-medium py-3 px-6 rounded-xl hover:bg-gray-300 transition duration-200 shadow-sm">
+        ← Kembali ke Beranda
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

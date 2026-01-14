@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daftar Mata Kuliah</title>
+</head>
+<body>
+    <h1>Daftar Mata Kuliah</h1>
+    <a href="{% url 'tambah_matakuliah' %}">Tambah Mata Kuliah</a>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Kode MK</th>
+            <th>Nama MK</th>
+            <th>SKS</th>
+            <th>Aksi</th>
+        </tr>
+        {% for mk in matakuliah_list %}
+        <tr>
+            <td>{{ mk.kode_mk }}</td>
+            <td>{{ mk.nama_mk }}</td>
+            <td>{{ mk.sks }}</td>
+            <td>
+                <a href="{% url 'edit_matakuliah' mk.id %}">Edit</a> |
+                <a href="{% url 'hapus_matakuliah' mk.id %}" onclick="return confirm('Yakin hapus?')">Hapus</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">Belum ada data</td></tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
