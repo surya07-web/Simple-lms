@@ -4,3 +4,4 @@ gunicorn
 django-jazzmin
 django-ninja
 whitenoise
+django-silk
