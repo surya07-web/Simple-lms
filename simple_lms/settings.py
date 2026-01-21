@@ -1,33 +1,48 @@
 from pathlib import Path
 import os
 
+# =========================
 # BASE DIRECTORY
+# =========================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# =========================
 # SECURITY
-SECRET_KEY = 'django-insecure-test-key'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+# =========================
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
 
-# ✅ INSTALLED APPS (dengan Jazzmin untuk tampilan admin modern)
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    ".railway.app",   # ✅ wajib untuk Railway
+]
+
+# =========================
+# INSTALLED APPS
+# =========================
 INSTALLED_APPS = [
-    'jazzmin',  # 🎨 Tema modern untuk admin Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'lms',   # aplikasi utama kamu
+    'lms',
 ]
 
+# Jazzmin & Silk hanya aktif saat DEBUG=True (lokal)
 if DEBUG:
-    INSTALLED_APPS += ['silk']
+    INSTALLED_APPS.insert(0, 'jazzmin')
+    INSTALLED_APPS.append('silk')
 
-# ✅ MIDDLEWARE
+# =========================
+# MIDDLEWARE
+# =========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware', # ✅ letakkan setelah SessionMiddleware
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -36,13 +51,17 @@ MIDDLEWARE = [
 ]
 
 if DEBUG:
-    MIDDLEWARE += ['silk.middleware.SilkyMiddleware']
-    
+    MIDDLEWARE.insert(2, 'silk.middleware.SilkyMiddleware')
+
+# =========================
 # URL & WSGI
+# =========================
 ROOT_URLCONF = 'simple_lms.urls'
 WSGI_APPLICATION = 'simple_lms.wsgi.application'
 
-# ✅ TEMPLATE SETTINGS
+# =========================
+# TEMPLATES
+# =========================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -59,7 +78,9 @@ TEMPLATES = [
     },
 ]
 
-# ✅ DATABASE SETTINGS
+# =========================
+# DATABASE
+# =========================
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -67,39 +88,53 @@ DATABASES = {
     }
 }
 
-# PASSWORD VALIDATION
+# =========================
+# PASSWORD
+# =========================
 AUTH_PASSWORD_VALIDATORS = []
 
+# =========================
 # INTERNATIONALIZATION
+# =========================
 LANGUAGE_CODE = 'id'
 TIME_ZONE = 'Asia/Jakarta'
 USE_I18N = True
 USE_TZ = True
 
-# ✅ STATIC FILES
+# =========================
+# STATIC & MEDIA
+# =========================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# DEFAULT PRIMARY KEY FIELD TYPE
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# ✅ SILK CONFIGURATION (Profiling)
-SILKY_PYTHON_PROFILER = True
-SILKY_AUTHENTICATION = True       # butuh login admin untuk akses /silk/
-SILKY_AUTHORISATION = True
-SILKY_ANALYZE_QUERIES = True
-
-# ✅ JAZZMIN CUSTOMIZATION (Tampilan Admin)
-JAZZMIN_SETTINGS = {
-    "site_title": "Sistem LMS Mahasiswa",
-    "site_header": "Panel Administrasi LMS",
-    "site_brand": "LMS UDINUS",
-    "welcome_sign": "Selamat datang di panel admin!",
-    "copyright": "© 2025 Universitas Dian Nuswantoro",
-    "search_model": "lms.Mahasiswa",
-    "show_sidebar": True,
-    "hide_apps": [],
-    "order_with_respect_to": ["auth", "lms"],
-}
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# =========================
+# DEFAULT PK
+# =========================
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# =========================
+# SILK CONFIG (HANYA DEBUG)
+# =========================
+if DEBUG:
+    SILKY_PYTHON_PROFILER = True
+    SILKY_AUTHENTICATION = True
+    SILKY_AUTHORISATION = True
+    SILKY_ANALYZE_QUERIES = True
+
+# =========================
+# JAZZMIN CONFIG (HANYA DEBUG)
+# =========================
+if DEBUG:
+    JAZZMIN_SETTINGS = {
+        "site_title": "Sistem LMS Mahasiswa",
+        "site_header": "Panel Administrasi LMS",
+        "site_brand": "LMS UDINUS",
+        "welcome_sign": "Selamat datang di panel admin!",
+        "copyright": "© 2025 Universitas Dian Nuswantoro",
+        "search_model": "lms.Mahasiswa",
+        "show_sidebar": True,
+        "order_with_respect_to": ["auth", "lms"],
+    }
