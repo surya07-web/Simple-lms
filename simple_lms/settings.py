@@ -16,7 +16,8 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    ".railway.app",   # ✅ wajib untuk Railway
+    "simple-lms-production.up.railway.app",
+    ".railway.app",
 ]
 
 # =========================
@@ -32,7 +33,7 @@ INSTALLED_APPS = [
     'lms',
 ]
 
-# Jazzmin & Silk hanya aktif saat DEBUG=True (lokal)
+# Jazzmin & Silk hanya aktif di lokal (DEBUG=True)
 if DEBUG:
     INSTALLED_APPS.insert(0, 'jazzmin')
     INSTALLED_APPS.append('silk')
@@ -42,6 +43,7 @@ if DEBUG:
 # =========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',   # ✅ wajib untuk Railway static
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -51,7 +53,7 @@ MIDDLEWARE = [
 ]
 
 if DEBUG:
-    MIDDLEWARE.insert(2, 'silk.middleware.SilkyMiddleware')
+    MIDDLEWARE.insert(3, 'silk.middleware.SilkyMiddleware')
 
 # =========================
 # URL & WSGI
@@ -106,6 +108,8 @@ USE_TZ = True
 # =========================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
